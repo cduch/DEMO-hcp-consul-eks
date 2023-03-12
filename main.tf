@@ -99,9 +99,10 @@ data "aws_eks_cluster_auth" "cluster" {
 }
 
 module "eks" {
-  count                  = local.install_eks_cluster ? 1 : 0
-  source                 = "terraform-aws-modules/eks/aws"
-  version                = "17.24.0"
+  count  = local.install_eks_cluster ? 1 : 0
+  source = "terraform-aws-modules/eks/aws"
+  #version                = "17.24.0"
+  version                = "19.10.0"
   kubeconfig_api_version = "client.authentication.k8s.io/v1beta1"
 
   cluster_name    = "${local.cluster_id}-eks"

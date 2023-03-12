@@ -32,5 +32,5 @@ variable "install_demo_app" {
 
 variable "install_eks_cluster" {
   type = bool
-  default = false
+  default = true
 }
