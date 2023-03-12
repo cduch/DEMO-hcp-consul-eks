@@ -27,7 +27,7 @@ variable "hvn_id" {
 
 variable "install_demo_app" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "install_eks_cluster" {
