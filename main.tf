@@ -194,16 +194,20 @@ output "consul_url" {
 }
 
 output "kubeconfig_filename" {
-  value = abspath(one(module.eks[*].kubeconfig_filename))
+  value = <<EOF
+    ${local.install_eks_cluster ? "abspath(one(module.eks[*].kubeconfig_filename))" : ""}
+  EOF
 }
 
 output "helm_values_filename" {
-  value = abspath(module.eks_consul_client.helm_values_file)
+  value = <<EOF
+    ${local.install_eks_cluster ? "abspath(module.eks_consul_client.helm_values_file)" : ""}
+  EOF
 }
 
 output "hashicups_url" {
   value = <<EOF
-  ${local.install_demo_app ? "${one(module.demo_app[*].hashicups_url)}:8080" :""}
+  ${local.install_demo_app ? "${one(module.demo_app[*].hashicups_url)}:8080" : ""}
   EOF
 }
 
