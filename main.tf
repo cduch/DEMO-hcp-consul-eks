@@ -202,7 +202,9 @@ output "helm_values_filename" {
 }
 
 output "hashicups_url" {
-  value = ${local.install_demo_app ? "${one(module.demo_app[*].hashicups_url)}:8080" :""}
+  value = <<EOF
+  ${local.install_demo_app ? "${one(module.demo_app[*].hashicups_url)}:8080" :""}
+  EOF
 }
 
 output "next_steps" {
