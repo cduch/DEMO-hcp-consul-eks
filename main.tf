@@ -39,22 +39,22 @@ provider "aws" {
 
 provider "helm" {
   kubernetes {
-    host                   = data.aws_eks_cluster.cluster[0].endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster[0].certificate_authority.0.data)
-    token                  = data.aws_eks_cluster_auth.cluster[0].token
+    host                   = data.aws_eks_cluster.cluster.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+    token                  = data.aws_eks_cluster_auth.cluster.token
   }
 }
 
 provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster[0].endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster[0].certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster[0].token
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
 }
 
 provider "kubectl" {
-  host                   = data.aws_eks_cluster.cluster[0].endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster[0].certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster[0].token
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
   load_config_file       = false
 }
 
@@ -80,11 +80,11 @@ module "vpc" {
 }
 
 data "aws_eks_cluster" "cluster" {
-  name = module.eks[0].cluster_id
+  name = module.eks.cluster_id
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks[0].cluster_id
+  name = module.eks.cluster_id
 }
 
 module "eks" {
@@ -136,7 +136,7 @@ module "eks_consul_client" {
   consul_hosts     = tolist([substr(data.terraform_remote_state.consul.outputs.consul_url, 8, -1)])
   consul_version   = data.terraform_remote_state.consul.outputs.consul_version
   datacenter       = data.terraform_remote_state.consul.outputs.consul_datacenter
-  k8s_api_endpoint = module.eks[0].cluster_endpoint
+  k8s_api_endpoint = module.eks.cluster_endpoint
 
   # The EKS node group will fail to create if the clients are
   # created at the same time. This forces the client to wait until
@@ -152,7 +152,7 @@ module "demo_app" {
 }
 
 output "kubeconfig_filename" {
-  value = "abspath(one(module.eks[*].kubeconfig_filename))"
+  value = "abspath(one(module.eks.kubeconfig_filename))"
 }
 
 output "helm_values_filename" {
@@ -160,5 +160,5 @@ output "helm_values_filename" {
 }
 
 output "hashicups_url" {
-  value = "${one(module.demo_app[*].hashicups_url)}:8080"
+  value = "${one(module.demo_app.hashicups_url)}:8080"
 }
