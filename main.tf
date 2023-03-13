@@ -152,11 +152,11 @@ module "demo_app" {
 }
 
 output "kubeconfig_filename" {
-  value = "abspath(one(module.eks.kubeconfig_filename))"
+  value = abspath(module.eks.kubeconfig_filename)
 }
 
 output "helm_values_filename" {
-  value = "abspath(module.eks_consul_client.helm_values_file)"
+  value = abspath(module.eks_consul_client.helm_values_file)
 }
 
 output "hashicups_url" {
