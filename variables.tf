@@ -20,17 +20,13 @@ variable "cluster_id" {
   default = "demo-cluster"
 }
 
-variable "hvn_id" {
-  type    = string
-  default = "demo-cluster-hvn"
+variable "consulworkspace" {
+  type = string
+  default = "HCP_Consul"
 }
 
-variable "install_demo_app" {
-  type    = bool
-  default = true
-}
 
-variable "install_eks_cluster" {
-  type = bool
-  default = true
+variable "organization" {
+  type = string
+  default = "carstenduch"
 }
