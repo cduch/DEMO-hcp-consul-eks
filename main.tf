@@ -88,7 +88,6 @@ data "aws_eks_cluster_auth" "cluster" {
 }
 
 module "eks" {
-  count                  = var.install_eks_cluster ? 1 : 0
   source                 = "terraform-aws-modules/eks/aws"
   version                = "17.24.0"
   kubeconfig_api_version = "client.authentication.k8s.io/v1beta1"
@@ -146,7 +145,6 @@ module "eks_consul_client" {
 }
 
 module "demo_app" {
-  count   = var.install_demo_app ? 1 : 0
   source  = "hashicorp/hcp-consul/aws//modules/k8s-demo-app"
   version = "~> 0.9.3"
 
