@@ -160,5 +160,5 @@ output "helm_values_filename" {
 }
 
 output "hashicups_url" {
-  value = "${one(module.demo_app.hashicups_url)}:8080"
+  value = "${module.demo_app.hashicups_url}:8080"
 }
